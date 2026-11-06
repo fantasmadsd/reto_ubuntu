@@ -1,17 +1,19 @@
-"""Reto 5 - Leer los coches de la base de datos MySQL desde Python."""
-import os
+"""Reto 5/6 - Leer los coches de MySQL con la configuración en config.json."""
+import json
+import sys
+from pathlib import Path
 
 import mysql.connector
 
-# Datos de conexión. El contenedor reto_mysql está en la red Docker red_retos,
-# así que se resuelve por su nombre. La contraseña se recibe por variable de
-# entorno para no dejarla escrita en el repositorio.
-config = {
-    "user": "root",
-    "password": os.environ.get("DB_PASSWORD", ""),
-    "host": "reto_mysql",
-    "database": "bdcoches",
-}
+RUTA_CONFIG = Path(__file__).with_name("config.json")
+
+
+def cargar_config(ruta=RUTA_CONFIG):
+    """Lee los datos de conexión de config.json (excluido del repo por .gitignore)."""
+    if not ruta.exists():
+        sys.exit(f"No existe {ruta.name}. Copia config.example.json a config.json y rellénalo.")
+    with open(ruta, encoding="utf-8") as f:
+        return json.load(f)["mysql"]
 
 
 def conectar(config):
@@ -24,7 +26,7 @@ def conectar(config):
 
 
 def consulta_coches():
-    conexion = conectar(config)
+    conexion = conectar(cargar_config())
     if conexion is None:
         return
     # El cursor gestiona la llamada y el retorno de los datos
@@ -38,4 +40,5 @@ def consulta_coches():
     conexion.close()
 
 
-consulta_coches()
+if __name__ == "__main__":
+    consulta_coches()
