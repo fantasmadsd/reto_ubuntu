@@ -1,0 +1,15 @@
+{
+  "mysql": {
+    "user": "root",
+    "password": "CAMBIAR",
+    "host": "reto_mysql",
+    "database": "bdcoches"
+  },
+  "mongo": {
+    "user": "admin",
+    "password": "CAMBIAR",
+    "host": "reto_mongo",
+    "port": 27017,
+    "database": "concesionario"
+  }
+}
