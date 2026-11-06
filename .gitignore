@@ -1,0 +1,8 @@
+# Credenciales y configuración local: nunca se suben al repositorio
+config.json
+.env
+*.env
+
+# Python
+__pycache__/
+*.pyc
